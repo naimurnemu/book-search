@@ -31,15 +31,16 @@ searchSubmit.addEventListener("click", () => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => showData(data));
-    
 });
 
 /* ------- display search results ------- */
 const showData = (infos) => {
-    
-    const { docs } = infos;
     /* --- show total result --- */
-    totalResult.innerText = `Total search result: ${docs.length} `;
+    totalResult.innerText = `Total search result: ${infos.numFound} `;
+
+    /* array from object */
+    const { docs } = infos;
+    const books = docs.slice(0, 25);
 
     /* Handle error */
     if (docs.length === 0) {
@@ -48,14 +49,8 @@ const showData = (infos) => {
         showError.innerText = "";
 
         /* ---- show loaded data ----- */
-        docs.forEach((docItem) => {
-            const {
-                cover_i,
-                title,
-                author_name,
-                publisher_facet,
-                first_publish_year,
-            } = docItem;
+        books.forEach((docItem) => {
+            const { cover_i, title, author_name, first_publish_year } = docItem;
             const div = document.createElement("div");
             div.classList.add("col");
             div.innerHTML = `
@@ -75,9 +70,3 @@ const showData = (infos) => {
     /* hide Spinner */
     spinnerRoll("none");
 };
-
-
-/* === undefined || 10909258 */
-{
-    /* <h6 class="text-center card-text text-secondary" ><small>Publisher: ${publisher_facet}</small> </h6> */
-}
