@@ -2,12 +2,14 @@
 const searchInput = document.getElementById("search-input");
 const searchSubmit = document.getElementById("search-btn");
 const bookContainer = document.getElementById("book-container");
-const spiner = document.getElementById("load-spain");
+// const spiner = document.getElementById("load-spin");
 const totalResult = document.getElementById("total-results");
 const showError = document.getElementById("errors");
 
 /*------- Spinner ------*/
- 
+const spinnerRoll = (roundStyle) => {
+    document.getElementById("load-spinner").style.display = roundStyle;
+};
 
 /* -------handle search event------- */
 searchSubmit.addEventListener("click", () => {
@@ -17,21 +19,24 @@ searchSubmit.addEventListener("click", () => {
     searchInput.value = "";
 
     /* ----clear value when loading--- */
-    bookContainer.innerText = "";
+    bookContainer.textContent = "";
     totalResult.innerText = "";
     showError.innerText = "";
 
-     
+    /* Show Spinner */
+    spinnerRoll("block");
 
     /* --- Load data From api---- */
     const url = `https://openlibrary.org/search.json?q=${search}`;
     fetch(url)
         .then((response) => response.json())
         .then((data) => showData(data));
+    
 });
 
 /* ------- display search results ------- */
 const showData = (infos) => {
+    
     const { docs } = infos;
     /* --- show total result --- */
     totalResult.innerText = `Total search result: ${docs.length} `;
@@ -67,7 +72,10 @@ const showData = (infos) => {
             bookContainer.appendChild(div);
         });
     }
+    /* hide Spinner */
+    spinnerRoll("none");
 };
+
 
 /* === undefined || 10909258 */
 {
