@@ -55,13 +55,21 @@ const showData = (infos) => {
             div.classList.add("col");
             div.innerHTML = `
             <div class="card h-100">
-                <img src="https://covers.openlibrary.org/b/id/${cover_i}-M.jpg" class="card-img-top img-fluid" alt="...">
+                <img src="https://covers.openlibrary.org/b/id/${
+                    cover_i || "10909258"
+                }-M.jpg" class="card-img-top img-fluid" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title text-center">${title}</h4>
-                    <h6 class="card-text text-center text-danger">Author: ${author_name}  </h6>
+                    <h4 class="card-title text-center">${
+                        title || "A Beautiful Book!"
+                    }</h4>
+                    <h6 class="card-text text-center text-danger">Author: ${
+                        author_name || "A Great Writer"
+                    }  </h6>
                 </div>
                 <div class="card-footer text-center">
-                    <p class="card-text">First publish: ${first_publish_year}</p> 
+                    <p class="card-text">First publish: ${
+                        first_publish_year || "It Was a Spacial Day!"
+                    }</p> 
                 </div>
             </div>`;
             bookContainer.appendChild(div);
